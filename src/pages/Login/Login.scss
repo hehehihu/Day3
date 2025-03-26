@@ -1,0 +1,75 @@
+.login-container {
+    max-width: 600px;
+    margin: 0 auto;
+    font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+    color: #000;
+
+    h1 {
+        font-size: 2.5rem;
+        font-weight: bold;
+        margin-bottom: 10px;
+    }
+
+    hr {
+        margin: 20px 0;
+        border: 0;
+        height: 1px;
+        background: #ddd;
+    }
+
+    .login-intro {
+        margin-bottom: 30px;
+
+        p {
+            margin: 5px 0;
+            font-size: 1rem;
+
+            strong {
+                font-weight: bold;
+            }
+        }
+    }
+
+    form {
+        display: flex;
+        flex-direction: column;
+
+        label {
+            font-weight: bold;
+            margin-top: 20px;
+            margin-bottom: 5px;
+        }
+
+        input {
+            padding: 10px;
+            background-color: #eee;
+            border: none;
+            font-size: 1rem;
+        }
+
+        .password-label {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-top: 20px;
+
+            a {
+                font-size: 0.9rem;
+                color: blue;
+                text-decoration: underline;
+            }
+        }
+
+        button {
+            margin-top: 30px;
+            padding: 12px 20px;
+            background-color: #0000ff;
+            color: white;
+            font-weight: bold;
+            font-size: 1rem;
+            border: none;
+            cursor: pointer;
+            width: fit-content;
+        }
+    }
+}
