@@ -27,7 +27,7 @@ const Register: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('https://dummyjson.com/users/add', {
+      const response = await axios.post('https://dummyjson.com/docs/users#users-add', {
         firstName,
         lastName,
         email,
