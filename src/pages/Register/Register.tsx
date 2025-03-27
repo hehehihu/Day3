@@ -13,6 +13,7 @@ const Register: React.FC = () => {
   const [subscribe, setSubscribe] = useState(false);
   const [emailError, setEmailError] = useState('');
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -23,8 +24,10 @@ const Register: React.FC = () => {
       return;
     }
 
+    setIsLoading(true);
+
     try {
-      const response = await axios.post('https://dummyjson.com/users/add', {
+      const response = await axios.post('https://dummyjson.com/docs/users#users-add', {
         firstName,
         lastName,
         email,
@@ -35,6 +38,8 @@ const Register: React.FC = () => {
     } catch (error) {
       console.error('Register failed:', error);
       AntMessage.error('Failed to register. Please try again.');
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -78,7 +83,9 @@ const Register: React.FC = () => {
           </label>
         </div>
 
-        <button type="submit">Create account</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? 'Creating account...' : 'Create account'}
+        </button>
       </form>
 
       <Modal
