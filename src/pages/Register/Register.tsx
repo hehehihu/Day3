@@ -1,7 +1,10 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
+import { Modal, message as AntMessage } from 'antd';
 import './Register.scss';
+import validateEmail from '../../utils/validateEmail';
 
-function Register() {
+const Register: React.FC = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [firstName, setFirstName] = useState('');
@@ -9,22 +12,34 @@ function Register() {
   const [country, setCountry] = useState('Viet Nam');
   const [subscribe, setSubscribe] = useState(false);
   const [emailError, setEmailError] = useState('');
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
-  const validateEmail = (value: string): boolean => {
-    const regex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
-    return regex.test(value);
+  const handleSubmit = async (e: React.FormEvent) => {
+    e.preventDefault();
+    
+    const emailError = validateEmail(email);
+    if (emailError) {
+      setEmailError(emailError);
+      return;
+    }
+
+    try {
+      const response = await axios.post('https://dummyjson.com/users/add', {
+        firstName,
+        lastName,
+        email,
+        password,
+      })
+      console.log('Register success:', response.data);
+      setIsModalOpen(true);
+    } catch (error) {
+      console.error('Register failed:', error);
+      AntMessage.error('Failed to register. Please try again.');
+    }
   };
 
-  const handleSubmit = (e: React.FormEvent) => {
-    e.preventDefault();
-    if (!email) {
-      setEmailError('Email is required');
-    } else if (!validateEmail(email)) {
-      setEmailError('Email is invalid');
-    } else {
-      setEmailError('');
-      alert('Account created successfully!');
-    }
+  const handleModalOk = () => {
+    setIsModalOpen(false);
   };
 
   return (
@@ -65,6 +80,16 @@ function Register() {
 
         <button type="submit">Create account</button>
       </form>
+
+      <Modal
+        title="Account created successfully!"
+        open={isModalOpen}
+        onOk={handleModalOk}
+        onCancel={() => setIsModalOpen(false)}
+        okText="OK"
+      >
+        <p>Account created successfully!</p>
+      </Modal>
     </div>
   );
 }
