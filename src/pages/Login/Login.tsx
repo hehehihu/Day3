@@ -18,7 +18,7 @@ const Login: React.FC = () => {
 
     setIsLoading(true);
     try {
-      const response = await axios.post('https://dummyjson.com/docs/users#users-login', {
+      const response = await axios.post('https://dummyjson.com/auth/login', {
           emailOrUsername,
           password,
       })

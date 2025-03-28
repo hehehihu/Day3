@@ -15,6 +15,16 @@ const Register: React.FC = () => {
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
 
+  const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setEmail(value);
+    
+    const emailError = validateEmail(value);
+    if (!emailError) {
+      setEmailError('');  
+    }
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
@@ -27,7 +37,7 @@ const Register: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('https://dummyjson.com/docs/users#users-add', {
+      const response = await axios.post('https://dummyjson.com/users/add', {
         firstName,
         lastName,
         email,
@@ -55,7 +65,7 @@ const Register: React.FC = () => {
 
       <form onSubmit={handleSubmit}>
         <label>Email</label>
-        <input type="text" value={email} onChange={(e) => setEmail(e.target.value)} />
+        <input type="text" value={email} onChange={handleEmailChange} />
         {emailError && <p className="error">{emailError}</p>}
 
         <label>Password</label>
