@@ -4,22 +4,22 @@ import { message } from 'antd';
 import './Login.scss';
 
 const Login: React.FC = () => {
-  const [emailOrUsername, setEmailOrUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!emailOrUsername || !password) {
+    if (!username || !password) {
       message.error('Please fill in all fields.');
       return;
     }
 
     setIsLoading(true);
     try {
-      const response = await axios.post('https://dummyjson.com/docs/users#users-login', {
-          emailOrUsername,
+      const response = await axios.post('https://dummyjson.com/auth/login', {
+          username,
           password,
       })
 
@@ -55,8 +55,8 @@ const Login: React.FC = () => {
         <label>E-mail or username</label>
         <input
           type="text"
-          value={emailOrUsername}
-          onChange={(e) => setEmailOrUsername(e.target.value)}
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
         />
 
         <div className="password-label">
