@@ -4,9 +4,9 @@ import { message } from 'antd';
 import './Login.scss';
 
 const Login: React.FC = () => {
-  const [emailOrUsername, setEmailOrUsername] = useState('');
-  const [password, setPassword] = useState('');
-  const [isLoading, setIsLoading] = useState(false);
+  const [emailOrUsername, setEmailOrUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();

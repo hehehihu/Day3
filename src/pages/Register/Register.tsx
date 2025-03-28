@@ -5,15 +5,15 @@ import './Register.scss';
 import validateEmail from '../../utils/validateEmail';
 
 const Register: React.FC = () => {
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [firstName, setFirstName] = useState('');
-  const [lastName, setLastName] = useState('');
-  const [country, setCountry] = useState('Viet Nam');
-  const [subscribe, setSubscribe] = useState(false);
-  const [emailError, setEmailError] = useState('');
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isLoading, setIsLoading] = useState(false);
+  const [email, setEmail] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [firstName, setFirstName] = useState<string>('');
+  const [lastName, setLastName] = useState<string>('');
+  const [country, setCountry] = useState<string>('Viet Nam');
+  const [subscribe, setSubscribe] = useState<boolean>(false);
+  const [emailError, setEmailError] = useState<string>('');
+  const [isModalOpen, setIsModalOpen] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const handleEmailChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
