@@ -1,13 +1,41 @@
-import { useState } from 'react';
+import React, { useState } from 'react';
+import axios from 'axios';
+import { message } from 'antd';
 import './Login.scss';
 
-function Login() {
-  const [emailOrUsername, setEmailOrUsername] = useState('');
-  const [password, setPassword] = useState('');
+const Login: React.FC = () => {
+  const [username, setUsername] = useState<string>('');
+  const [password, setPassword] = useState<string>('');
+  const [isLoading, setIsLoading] = useState<boolean>(false);
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    alert(`Logging in as: ${emailOrUsername}`);
+    
+    if (!username || !password) {
+      message.error('Please fill in all fields.');
+      return;
+    }
+
+    setIsLoading(true);
+    try {
+      const response = await axios.post('https://dummyjson.com/auth/login', {
+          username,
+          password,
+      })
+
+      const { token, refreshToken } = response.data;
+
+      sessionStorage.setItem('accessToken', token);
+      sessionStorage.setItem('refreshToken', refreshToken);
+
+      message.success('Login successful!');
+
+    } catch (error: any) {
+        console.error('Login failed:', error);
+        message.error('Login failed. Please try again.');
+    } finally {
+        setIsLoading(false);
+    }
   };
 
   return (
@@ -27,8 +55,8 @@ function Login() {
         <label>E-mail or username</label>
         <input
           type="text"
-          value={emailOrUsername}
-          onChange={(e) => setEmailOrUsername(e.target.value)}
+          value={username}
+          onChange={(e) => setUsername(e.target.value)}
         />
 
         <div className="password-label">
@@ -41,7 +69,9 @@ function Login() {
           onChange={(e) => setPassword(e.target.value)}
         />
 
-        <button type="submit">Log in</button>
+        <button type="submit" disabled={isLoading}>
+          {isLoading ? 'Logging in...' : 'Log in'}
+        </button>
       </form>
     </div>
   );
