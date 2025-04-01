@@ -1,12 +1,15 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { message } from 'antd';
 import './Login.scss';
+import authService from '../../services/authService';
+import { useNavigate } from "react-router-dom";
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState<string>('');
   const [password, setPassword] = useState<string>('');
   const [isLoading, setIsLoading] = useState<boolean>(false);
+
+  const navigate = useNavigate();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -18,7 +21,7 @@ const Login: React.FC = () => {
 
     setIsLoading(true);
     try {
-      const response = await axios.post('https://dummyjson.com/auth/login', {
+      const response = await authService.login({
           username,
           password,
       })
@@ -30,6 +33,7 @@ const Login: React.FC = () => {
 
       message.success('Login successful!');
 
+      navigate('/account'); 
     } catch (error: any) {
         console.error('Login failed:', error);
         message.error('Login failed. Please try again.');

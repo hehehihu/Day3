@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
-import axios from 'axios';
 import { Modal, message as AntMessage } from 'antd';
 import './Register.scss';
 import validateEmail from '../../utils/validateEmail';
+import authService from '../../services/authService';
 
 const Register: React.FC = () => {
   const [email, setEmail] = useState<string>('');
@@ -37,7 +37,7 @@ const Register: React.FC = () => {
     setIsLoading(true);
 
     try {
-      const response = await axios.post('https://dummyjson.com/users/add', {
+      const response = await authService.register({
         firstName,
         lastName,
         email,
