@@ -1,7 +1,7 @@
 import axios from "axios";
 
-const BASE_URL = "https://dummyjson.com";
-const AUTH_URL = "/auth";
+const BASE_URL = import.meta.env.VITE_BASE_URL;
+const AUTH_URL = import.meta.env.VITE_AUTH_URL;
 
 const authService = {
   login: (data: { username: string; password: string }) => {

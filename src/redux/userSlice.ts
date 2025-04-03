@@ -1,7 +1,6 @@
-import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from "@reduxjs/toolkit";
 
-// 1. Định nghĩa type cho user
-export interface UserState {
+export interface User {
   id: number;
   firstName: string;
   lastName: string;
@@ -11,21 +10,26 @@ export interface UserState {
   gender: string;
 }
 
-// 2. Kiểu tổng hợp: user có thể null
-type UserSliceState = UserState | null;
+type UserState = {
+  currentUser: User | null;
+};
 
-// 3. Khai báo initialState
-const initialState: UserSliceState = null;
+const initialState: UserState = {
+  currentUser: null,
+};
 
-// 4. Tạo slice với reducer trả về kiểu đúng
 const userSlice = createSlice({
   name: 'user',
   initialState,
   reducers: {
-    setUser: (_, action: PayloadAction<UserState>): UserSliceState => action.payload,
-    clearUser: (): UserSliceState => null,
+    setUserAction: (state, action: PayloadAction<User>) => {
+      state.currentUser = action.payload;
+    },
+    clearUser: (state) => {
+      state.currentUser = null;
+    },
   },
 });
 
-export const { setUser, clearUser } = userSlice.actions;
+export const { setUserAction, clearUser } = userSlice.actions;
 export default userSlice.reducer;
