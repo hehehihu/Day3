@@ -3,6 +3,8 @@ import { message } from 'antd';
 import './Login.scss';
 import authService from '../../services/authService';
 import { useNavigate } from "react-router-dom";
+import { useDispatch } from "react-redux";
+import { setUserAction } from "../../redux/userSlice";
 
 const Login: React.FC = () => {
   const [username, setUsername] = useState<string>('');
@@ -10,6 +12,7 @@ const Login: React.FC = () => {
   const [isLoading, setIsLoading] = useState<boolean>(false);
 
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -26,16 +29,18 @@ const Login: React.FC = () => {
           password,
       })
 
-      const { token, refreshToken } = response.data;
+      const user = response.data;
+      const { accessToken, refreshToken } = user;
 
-      sessionStorage.setItem('accessToken', token);
+      sessionStorage.setItem('accessToken', accessToken);
       sessionStorage.setItem('refreshToken', refreshToken);
 
-      message.success('Login successful!');
+      console.log("🔥 user to dispatch:", user);
+      dispatch(setUserAction(user));
 
+      message.success('Login successful!');
       navigate('/account'); 
     } catch (error: any) {
-        console.error('Login failed:', error);
         message.error('Login failed. Please try again.');
     } finally {
         setIsLoading(false);
