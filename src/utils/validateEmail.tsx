@@ -4,6 +4,8 @@ const validateEmailInput = (emailInput: string): string | null => {
     const MIN_LOCAL_LENGTH = 4;
     const MAX_LOCAL_LENGTH = 64;
 
+    if (!email) return 'Email is required';
+    
     if (email.length > MAX_EMAIL_LENGTH) {
         return 'Email is too long';
     }

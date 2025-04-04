@@ -1,7 +1,19 @@
 {
-  "files": [],
-  "references": [
-    { "path": "./tsconfig.app.json" },
-    { "path": "./tsconfig.node.json" }
-  ]
+  "compilerOptions": {
+    "jsx": "react-jsx", 
+    "module": "esnext",
+    "target": "es5",
+    "lib": ["dom", "dom.iterable", "esnext"],
+    "moduleResolution": "node",
+    "esModuleInterop": true,
+    "allowJs": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "isolatedModules": true,
+    "noEmit": true,
+    "strict": true,
+    "resolveJsonModule": true,
+    "types": ["jest", "node"] 
+  },
+  "include": ["src", "setupTests.ts"]
 }
