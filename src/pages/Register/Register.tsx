@@ -43,10 +43,11 @@ const Register: React.FC = () => {
         email,
         password,
       })
-      console.log('Register success:', response.data);
       setIsModalOpen(true);
-    } catch (error) {
-      console.error('Register failed:', error);
+    } catch (error:any) {
+      const message =
+        error?.response?.data?.message || error?.message || 'Failed to register. Please try again.';
+        console.error('Register failed:', message);
       AntMessage.error('Failed to register. Please try again.');
     } finally {
       setIsLoading(false);
@@ -64,32 +65,63 @@ const Register: React.FC = () => {
       <p><strong>New Customer? Please create an account.</strong></p>
 
       <form onSubmit={handleSubmit}>
-        <label>Email</label>
-        <input type="text" value={email} onChange={handleEmailChange} />
+        <label htmlFor="email">Email</label>
+        <input
+          id="email"
+          type="text"
+          value={email}
+          onChange={handleEmailChange}
+          placeholder="Enter your email"
+        />
         {emailError && <p className="error">{emailError}</p>}
 
-        <label>Password</label>
-        <input type="password" value={password} onChange={(e) => setPassword(e.target.value)} />
+        <label htmlFor="password">Password</label>
+        <input
+          id="password"
+          type="password"
+          value={password}
+          onChange={(e) => setPassword(e.target.value)}
+          placeholder="Enter password"
+        />
 
-        <label>First name</label>
-        <input placeholder="optional" value={firstName} onChange={(e) => setFirstName(e.target.value)} />
+<label htmlFor="firstName">First name</label>
+        <input
+          id="firstName"
+          placeholder="optional"
+          value={firstName}
+          onChange={(e) => setFirstName(e.target.value)}
+        />
         <p className="note">So that we know what to call you if we email you.</p>
 
-        <label>Last name</label>
-        <input placeholder="optional" value={lastName} onChange={(e) => setLastName(e.target.value)} />
+        <label htmlFor="lastName">Last name</label>
+        <input
+          id="lastName"
+          placeholder="optional"
+          value={lastName}
+          onChange={(e) => setLastName(e.target.value)}
+        />
 
-        <label>Country or Region</label>
-        <select value={country} onChange={(e) => setCountry(e.target.value)}>
+        <label htmlFor="country">Country or Region</label>
+        <select
+          id="country"
+          value={country}
+          onChange={(e) => setCountry(e.target.value)}
+        >
           <option value="Viet Nam">Viet Nam</option>
           <option value="United States">United States</option>
           <option value="Japan">Japan</option>
         </select>
 
         <div className="checkbox">
-          <input type="checkbox" id="subscribe" checked={subscribe} onChange={() => setSubscribe(!subscribe)} />
+          <input
+            type="checkbox"
+            id="subscribe"
+            checked={subscribe}
+            onChange={() => setSubscribe(!subscribe)}
+          />
           <label htmlFor="subscribe">
             <strong>Sign up to the Ableton newsletter to stay up to date with the latest special offers, tutorial videos, downloads, surveys and other news.</strong>
-             It’s free and you can unsubscribe at any time. Further information is available in our <a href="#">Privacy Policy</a>.
+            It’s free and you can unsubscribe at any time. Further information is available in our <a href="#">Privacy Policy</a>.
           </label>
         </div>
 
